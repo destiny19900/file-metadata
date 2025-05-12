@@ -1,6 +1,8 @@
 var express = require('express');
 var cors = require('cors');
-var multer = require('multer'); // Add multer for file uploads
+var multer = require('multer');
+var fs = require('fs');
+var path = require('path');
 require('dotenv').config();
 
 var app = express();
@@ -12,8 +14,14 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+// Ensure uploads directory exists
+var uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
+
 // Configure multer for file uploads
-var upload = multer({ dest: 'uploads/' });
+var upload = multer({ dest: '/tmp/' }); // Temporary storage for uploaded files
 
 // Define the /api/fileanalyse endpoint
 app.post('/api/fileanalyse', upload.single('upfile'), function (req, res) {
