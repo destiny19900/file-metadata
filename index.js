@@ -29,7 +29,7 @@ app.post('/api/fileanalyse', upload.single('upfile'), function (req, res) {
   });
 });
 
-const port = process.env.PORT || 3000;
+var port = process.env.PORT || 3000;
 app.listen(port, function () {
   console.log('Your app is listening on port ' + port);
 });
